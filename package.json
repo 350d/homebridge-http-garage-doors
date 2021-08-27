@@ -1,0 +1,36 @@
+{
+  "name": "homebridge-http-garage-doors",
+  "version": "0.0.1",
+  "description": "Garage Door plugin for Homebridge",
+  "author": "Vladimir Sobolev",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/350d/homebridge-http-garage-doors.git"
+  },
+  "bugs": {
+    "url": "https://github.com/350d/homebridge-http-garage-doors/issues",
+    "email": "v.sobolev@gmail.com"
+  },
+  "keywords": [
+    "homebridge-plugin",
+    "homebridge",
+    "garage",
+    "garagedoor",
+    "home"
+  ],
+  "engines": {
+    "node": ">=4.4.0",
+    "homebridge": ">=0.3.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "semistandard": "^8.0.0"
+  },
+  "scripts": {
+    "debug": "DEBUG=* homebridge --debug --plugin-path .",
+    "test": "./node_modules/.bin/semistandard",
+    "preversion": "npm test",
+    "postversion": "git push && git push --tags"
+  }
+}

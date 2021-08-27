@@ -1,0 +1,119 @@
+{
+  "pluginAlias": "HttpGarageDoors",
+  "pluginType": "accessory",
+  "singular": true,
+  "headerDisplay": "HTTP Garage doors plugin allows you to send HTTP request to any API. For example you have parking entrance with phone call trigger - you can setup Telnyx API to call specific number and use single API request to trigger this call. You can setup timings for your gates to get better state indication (OPENING, OPEN, CLOSING, CLOSE).",
+  "footerDisplay": "You can use this plugin to get garage door button on your CarPlay screen.",
+    "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string",
+            "default": "Garage Door",
+            "required": true
+          },
+          "simulateTimeOpening": {
+            "title": "Door opening time",
+            "type": "number",
+            "default": 13,
+            "required": true
+          },
+          "simulateTimeOpen": {
+            "title": "Door open time",
+            "type": "number",
+            "default": 15,
+            "required": true
+          },
+          "simulateTimeClosing": {
+            "title": "Door closing time",
+            "type": "number",
+            "default": 12,
+            "required": true
+          },
+          "closeAfter": {
+            "title": "Close gates after",
+            "type": "number",
+            "default": 28,
+            "required": true
+          },
+          "request": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "title": "URL",
+                "type": "string"
+              },
+              "method": {
+                "title": "Method",
+                "type": "string",
+                "default": "GET",
+                "enum": ["GET", "POST"]
+              },
+              "type": {
+                "title": "Type",
+                "type": "string",
+                "default": "JSON",
+                "oneOf": [
+                  {"title":"JSON", "enum": ["JSON"]},
+                  {"title":"FORM", "enum": ["FORM"]}
+                ]
+              },
+              "headers": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string", "placeholder": "Authorization"},
+                    "value": { "type": "string", "placeholder": "Bearer ABCDEF1234567890" }
+                  }
+                }
+              },
+              "params": {
+                "type": "array",
+                "title": "Parameters",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string", "placeholder": "foo"},
+                    "value": { "type": "string", "placeholder": "bar" }
+                  }
+                }
+              }
+            }
+          }
+        }
+  },
+  "layout": [
+      { "key": "name"},
+      { "type": "flex", "flex-flow": "row wrap", "items": [ "simulateTimeOpening", "simulateTimeOpen", "simulateTimeClosing", "closeAfter" ] },
+      { "key": "request.url"},
+      { "type": "flex", "flex-flow": "row wrap", "items": ["request.method", "request.type"]},
+      { "key": "request.headers", "placeholder": "Headers", "type": "array", "items": [ {
+        "type": "div",
+        "displayFlex": true,
+        "flex-direction": "row",
+        "items": [
+          { "key": "request.headers[].name", "flex": "1 1 50px",
+            "notitle": true, "placeholder": "Name"
+          },
+          { "key": "request.headers[].value", "flex": "4 4 200px",
+            "notitle": true, "placeholder": "Value"
+          }
+        ]
+      } ]},
+            { "key": "request.params", "placeholder": "Parameters", "type": "array", "items": [ {
+        "type": "div",
+        "displayFlex": true,
+        "flex-direction": "row",
+        "items": [
+          { "key": "request.params[].name", "flex": "1 1 50px",
+            "notitle": true, "placeholder": "Name"
+          },
+          { "key": "request.params[].value", "flex": "4 4 200px",
+            "notitle": true, "placeholder": "Value"
+          }
+        ]
+      } ]}
+    ]
+}

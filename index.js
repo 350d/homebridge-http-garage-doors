@@ -134,7 +134,7 @@ class HttpGarageDoorsAccessory {
     
     http_request(config, (error, response, body) => {
       if (error) log(error);
-      log(body);
+      this.log(body);
       callback(error, response, body);
     });
   }

@@ -77,20 +77,24 @@ class HttpGarageDoorsAccessory {
 
   sendRequest (request, callback) {
     this.httpRequest(request, (error, response, body) => {
-      this.simulateDoorOpening();
-      callback();
+      this.simulateDoorOpening(callback);
     });
   }
 
-  simulateDoorOpening () {
+  simulateDoorOpening (callback) {
     this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.OPENING);
+    this.log('Opening Door');
     setTimeout(() => {
       this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.OPEN);
+      this.log('Door open');
+      callback();
       setTimeout(() => {
         this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.CLOSING);
         this.service.setCharacteristic(Characteristic.TargetDoorState, Characteristic.TargetDoorState.CLOSED);
+        this.log('Closing door');
         setTimeout(() => {
           this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.CLOSED);
+          this.log('Dooe closed');
         }, this.simulateTimeClosing * 1000);
       }, this.simulateTimeOpen * 1000);
     }, this.simulateTimeOpening * 1000);
@@ -129,12 +133,17 @@ class HttpGarageDoorsAccessory {
       method: request.method || 'GET',
       headers: headers_object || {},
     };
-    this.log('httpRequest config');
+    this.log('httpRequest Config');
     this.log(config);
     
     http_request(config, (error, response, body) => {
-      if (error) log(error);
-      this.log(body);
+      if (!error && response.statusCode == 200) {
+        this.log('Response Body');
+        this.log(body);
+      } else {
+        this.log('Request Error');
+        log(error);
+      }
       callback(error, response, body);
     });
   }

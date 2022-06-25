@@ -20,7 +20,7 @@
     "home"
   ],
   "engines": {
-    "node": ">=4.4.0",
+    "node": ">=14",
     "homebridge": ">=0.3.0"
   },
   "dependencies": {

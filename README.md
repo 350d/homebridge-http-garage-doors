@@ -1,3 +1,5 @@
+[![verified-by-homebridge](https://badgen.net/badge/homebridge/verified/purple)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
+
 # Homebridge HTTP Garage doors
 Homebridge plugin for fake garage doors opener with http request build in.
 This plugin can help you to open your garage door by phone call or sms via any API you want (like Telnyx for production or https://www.httpbin.org/get for test).

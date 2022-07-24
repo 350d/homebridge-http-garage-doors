@@ -104,11 +104,13 @@ class HttpGarageDoorsAccessory {
 
     var headers_object = {},
         params_object = {},
-        body, json = false;
+        body, json = false,
+        query_params = [];
 
     if (request.params.length) {
       request.params.map(function(param){
         params_object[param.name] = param.value;
+        query_params.push(encodeURIComponent(param.name) + "=" + encodeURIComponent(param.value));
       });
     }
 
@@ -123,7 +125,12 @@ class HttpGarageDoorsAccessory {
       body = params_object;
     } else {
       json = false;
-      body = new URLSearchParams(params_object).toString();
+
+      if (request.method.toUpperCase() == 'GET') {
+        body = '';
+        if (query_params.length) url = url + (url.indexOf('?') < 0 ? '?' : '&') + query_params.join('&');
+      }
+      
     }
 
     var config = {

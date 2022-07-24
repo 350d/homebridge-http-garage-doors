@@ -142,7 +142,9 @@ class HttpGarageDoorsAccessory {
         this.log(body);
       } else {
         this.log('Request Error');
-        log(error);
+        this.log(error);
+        this.log('Request Error Body');
+        this.log(body);
       }
       callback(error, response, body);
     });

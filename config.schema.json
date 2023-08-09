@@ -81,6 +81,10 @@
                 }
               }
             }
+          },
+          "debug": {
+            "title": "Debug log",
+            "type": "boolean"
           }
         }
   },
@@ -102,7 +106,7 @@
           }
         ]
       } ]},
-            { "key": "request.params", "placeholder": "Parameters", "type": "array", "items": [ {
+      { "key": "request.params", "placeholder": "Parameters", "type": "array", "items": [ {
         "type": "div",
         "displayFlex": true,
         "flex-direction": "row",
@@ -114,6 +118,7 @@
             "notitle": true, "placeholder": "Value"
           }
         ]
-      } ]}
+      } ]},
+      { "key": "debug"}
     ]
 }

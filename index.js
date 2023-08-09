@@ -15,6 +15,8 @@ class HttpGarageDoorsAccessory {
   constructor (log, config) {
     this.log = log;
 
+    this.debug = config['debug'];
+
     this.request = config['request'];
 
     this.closeAfter = config['closeAfter'];
@@ -94,7 +96,7 @@ class HttpGarageDoorsAccessory {
         this.log('Closing door');
         setTimeout(() => {
           this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.CLOSED);
-          this.log('Dooe closed');
+          this.log('Door closed');
         }, this.simulateTimeClosing * 1000);
       }, this.simulateTimeOpen * 1000);
     }, this.simulateTimeOpening * 1000);
@@ -107,20 +109,29 @@ class HttpGarageDoorsAccessory {
         body, json = false,
         query_params = [];
 
-    if (request.params.length) {
+    if (this.debug) this.log('Check for request params...');
+
+    if (request.params && request.params.length) {
       request.params.map(function(param){
         params_object[param.name] = param.value;
         query_params.push(encodeURIComponent(param.name) + "=" + encodeURIComponent(param.value));
       });
     }
 
-    if (request.headers.length) {
+    if (this.debug) this.log('Check for request headers...');
+
+    if (request.headers && request.headers.length) {
       request.headers.map(function(header){
         headers_object[header.name] = header.value;
       });
     }
 
-    if (request.type.toUpperCase() == 'JSON') {
+    if (this.debug) {
+      this.log('Check for request type...');
+      this.log(request.type);
+    }
+
+    if (request.type && request.type.toUpperCase() == 'JSON') {
       json = true;
       body = params_object;
     } else {
@@ -133,6 +144,8 @@ class HttpGarageDoorsAccessory {
       
     }
 
+    if (this.debug) this.log('Prepare httpRequest Config');
+
     var config = {
       url: request.url,
       json: json,
@@ -140,18 +153,23 @@ class HttpGarageDoorsAccessory {
       method: request.method || 'GET',
       headers: headers_object || {},
     };
-    this.log('httpRequest Config');
-    this.log(config);
+
+    if (this.debug) {
+      this.log('httpRequest Config');
+      this.log(config);
+    }
     
     http_request(config, (error, response, body) => {
-      if (!error && response.statusCode == 200) {
-        this.log('Response Body');
-        this.log(body);
-      } else {
-        this.log('Request Error');
-        this.log(error);
-        this.log('Request Error Body');
-        this.log(body);
+      if (this.debug) {
+        if (!error && response.statusCode == 200) {
+          this.log('Response Body');
+          this.log(body);
+        } else {
+          this.log('Request Error');
+          this.log(error);
+          this.log('Request Error Body');
+          this.log(body);
+        }
       }
       callback(error, response, body);
     });

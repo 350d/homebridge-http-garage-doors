@@ -24,5 +24,7 @@
                 "bar": "foo",
             },
         },
+
+        "debug": false
     }]
 }

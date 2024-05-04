@@ -37,25 +37,35 @@ class HttpGarageDoorsAccessory {
   }
 
   getServices () {
+    if (this.debug) this.log('getServices...');
     return [this.informationService, this.service];
   }
 
   setupGarageDoorOpenerService (service) {
-    this.service.setCharacteristic(Characteristic.TargetDoorState, Characteristic.TargetDoorState.CLOSED);
-    this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.CLOSED);
+    service.setCharacteristic(Characteristic.TargetDoorState, Characteristic.TargetDoorState.CLOSED);
+    service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.CLOSED);
+
+    service.getCharacteristic(Characteristic.CurrentDoorState)
+      .on('get', (callback) => {
+        var cds = service.getCharacteristic(Characteristic.CurrentDoorState).value;
+        if (this.debug) this.log('getCurrentDoorState() ' + cds);
+        callback(null, cds);
+      });
 
     service.getCharacteristic(Characteristic.TargetDoorState)
       .on('get', (callback) => {
         var tds = service.getCharacteristic(Characteristic.TargetDoorState).value;
+        if (this.debug) this.log('getTargetDoorState() ' + tds);
         if (tds === Characteristic.TargetDoorState.OPEN &&
           (((new Date()) - this.lastOpened) >= (this.closeAfter * 1000))) {
-          this.log('Setting TargetDoorState to CLOSED');
+          if (this.debug) this.log('Setting TargetDoorState to CLOSED');
           callback(null, Characteristic.TargetDoorState.CLOSED);
         } else {
           callback(null, tds);
         }
       })
       .on('set', (value, callback) => {
+        if (this.debug) this.log('setTargetDoorState() ' + value);
         if (value === Characteristic.TargetDoorState.OPEN) {
           this.lastOpened = new Date();
           switch (service.getCharacteristic(Characteristic.CurrentDoorState).value) {

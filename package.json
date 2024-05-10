@@ -1,8 +1,9 @@
 {
   "name": "homebridge-http-garage-doors",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Garage Door plugin for Homebridge",
   "author": "Vladimir Sobolev",
+  "homepage": "https://twitter.com/350d",
   "license": "MIT",
   "repository": {
     "type": "git",

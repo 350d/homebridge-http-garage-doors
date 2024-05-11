@@ -1,6 +1,6 @@
 {
   "pluginAlias": "HttpGarageDoors",
-  "pluginType": "platform",
+  "pluginType": "accessory",
   "singular": true,
   "headerDisplay": "The HTTP Garage Doors plugin enables you to send HTTP requests to any API, facilitating the automation of devices such as garage doors. For instance, if your parking entrance is activated via a phone call, you can configure the Telnyx API to dial a specific number with just a single API request. Additionally, you can set custom timings for your gates to receive accurate status updates, such as OPENING, OPEN, CLOSING, and CLOSED.",
   "footerDisplay": "Enhance your driving experience by using this plugin to add a garage door control button directly to your CarPlay screen.",

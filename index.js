@@ -121,22 +121,21 @@ class HttpGarageDoorsAccessory {
 
     if (this.debug) this.log('Check for request params...');
 
-    if (request.params && request.params.length) {
-      request.params.map(function(param){
-        params_object[param.name] = param.value;
+    if (request.params) {
+      for (const key in request.params) {
+        params_object[key] = request.params[key];
         query_params.push(encodeURIComponent(param.name) + "=" + encodeURIComponent(param.value));
-      });
+      };
     }
 
     if (this.debug) {
     	this.log('Check for request headers...');
-    	this.log(request.headers);
     }
 
-    if (request.headers && request.headers.length) {
-      request.headers.map(function(header){
-        headers_object[header.name] = header.value;
-      });
+    if (request.headers) {
+      for (const key in request.headers) {
+        headers_object[key] = request.headers[key];
+      };
     }
 
     if (this.debug) {

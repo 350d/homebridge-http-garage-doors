@@ -114,7 +114,9 @@ class HttpGarageDoorsAccessory {
 
   httpRequest(request, callback) {
 
-    var headers_object = {},
+    var headers_object = {
+    			Connection: 'close'
+    		},
         params_object = {},
         body, json = false,
         query_params = [];
@@ -147,10 +149,7 @@ class HttpGarageDoorsAccessory {
       json = true;
       body = params_object;
     } else {
-      json = false;
-
       if (request.method.toUpperCase() == 'GET') {
-        body = '';
         if (query_params.length) request.url = request.url + (request.url.indexOf('?') < 0 ? '?' : '&') + query_params.join('&');
       }
       
@@ -160,11 +159,12 @@ class HttpGarageDoorsAccessory {
 
     var config = {
       url: request.url,
-      json: json,
-      body: body,
       method: request.method || 'GET',
       headers: headers_object || {},
     };
+
+    if (json) config.json = true;
+    if (body) config.body = body;
 
     if (this.debug) {
       this.log('httpRequest Config');

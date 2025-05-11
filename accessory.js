@@ -112,14 +112,14 @@ class HttpGarageDoorsAccessory {
 
 		if (this.debug) this.log('Building request config...');
 
-		if (request.params && typeof request.params === 'object') {
-			for (const key in request.params) {
-				params_object[key] = request.params[key];
-				query_params.push(encodeURIComponent(key) + '=' + encodeURIComponent(request.params[key]));
-			}
+		if (request.params && request.params.length) {
+		  request.params.map(function(param){
+		    params_object[param.name] = param.value;
+		    query_params.push(encodeURIComponent(param.name) + "=" + encodeURIComponent(param.value));
+		  });
 		}
 
-		if (request.headers && typeof request.headers === 'object') {
+		if (request.headers && request.headers.length) {
 			for (const key in request.headers) {
 				headers_object[key] = request.headers[key];
 			}

@@ -1,6 +1,6 @@
 'use strict';
 
-const http_request = require("request");
+const axios = require('axios');
 
 var Service, Characteristic;
 
@@ -115,8 +115,8 @@ class HttpGarageDoorsAccessory {
   httpRequest(request, callback) {
 
     var headers_object = {
-    			Connection: 'close'
-    		},
+        'User-Agent': 'Homebridge'
+    },
         params_object = {},
         body, json = false,
         query_params = [];
@@ -131,7 +131,7 @@ class HttpGarageDoorsAccessory {
     }
 
     if (this.debug) {
-    	this.log('Check for request headers...');
+      this.log('Check for request headers...');
     }
 
     if (request.headers) {
@@ -147,30 +147,56 @@ class HttpGarageDoorsAccessory {
 
     if (request.type && request.type.toUpperCase() == 'JSON') {
       json = true;
-      body = params_object;
+      body = query_params.length ? params_object : false;
     } else {
       if (request.method.toUpperCase() == 'GET') {
-        if (query_params.length) request.url = request.url + (request.url.indexOf('?') < 0 ? '?' : '&') + query_params.join('&');
+        //if (query_params.length) request.url = request.url + (request.url.indexOf('?') < 0 ? '?' : '&') + query_params.join('&');
       }
       
     }
 
     if (this.debug) this.log('Prepare httpRequest Config');
-
+/*
     var config = {
       url: request.url,
       method: request.method || 'GET',
       headers: headers_object || {},
+      auth: false,
+      //followRedirect: false,
+      //simple: false,
+      //resolveWithFullResponse: true
+    };
+*/
+    var config = {
+      method: request.method || 'GET',
+      url: request.url,
+      headers: headers_object,
+      params: config.method === 'GET' ? params_object : undefined,
+      data: config.method !== 'GET' && query_params.length ? params_object : undefined,
+      timeout: 5000,
+      validateStatus: () => true
     };
 
-    if (json) config.json = true;
-    if (body) config.body = body;
+    //if (json) config.json = true;
+    //if (body) config.body = body;
 
     if (this.debug) {
       this.log('httpRequest Config');
       this.log(config);
     }
-    
+
+
+    axios(config)
+      .then(response => {
+        this.log('Response status:', response.status);
+        this.log('Response body:', response.data);
+        callback(null, response, response.data);
+      })
+      .catch(error => {
+        this.log('Axios request error:', error.message);
+        callback(error);
+      });
+    /*
     http_request(config, (error, response, body) => {
       if (this.debug) {
         if (!error && response.statusCode == 200) {
@@ -185,6 +211,7 @@ class HttpGarageDoorsAccessory {
       }
       callback(error, response, body);
     });
+    */
   }
 
 

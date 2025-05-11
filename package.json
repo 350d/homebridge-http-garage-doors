@@ -23,7 +23,7 @@
 	"main": "platform.js",
 	"engines": {
 		"node": ">=14",
-		"homebridge": ">=2.0.0"
+		"homebridge": ">=1.3.0"
 	},
 	"homebridge": {
 		"platforms": [

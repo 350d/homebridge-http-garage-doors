@@ -2,10 +2,10 @@
 
 const http_request = require('request');
 
-var Service, Characteristic;
-
 class HttpGarageDoorsAccessory {
-	constructor(log, config) {
+  constructor(log, config, hap) {
+    const { Service, Characteristic } = hap;
+    this.service = new Service.GarageDoorOpener(config.name, config.name);
 		this.log = log;
 		this.debug = config['debug'];
 		this.request = config['request'];
@@ -14,8 +14,6 @@ class HttpGarageDoorsAccessory {
 		this.simulateTimeOpening = config['simulateTimeOpening'];
 		this.simulateTimeOpen = config['simulateTimeOpen'];
 		this.simulateTimeClosing = config['simulateTimeClosing'];
-
-		this.service = new Service.GarageDoorOpener(config['name'], config['name']);
 		this.setupGarageDoorOpenerService(this.service);
 
 		this.informationService = new Service.AccessoryInformation();

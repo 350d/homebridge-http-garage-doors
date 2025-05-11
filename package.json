@@ -42,7 +42,7 @@
 	},
 	"scripts": {
 		"debug": "DEBUG=* homebridge --debug --plugin-path .",
-		"test": "./node_modules/.bin/semistandard",
+		"test": "semistandard",
 		"preversion": "npm test",
 		"postversion": "git push && git push --tags"
 	}

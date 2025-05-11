@@ -1,39 +1,51 @@
 {
-  "name": "homebridge-http-garage-doors",
-  "version": "0.1.2",
-  "description": "Garage Door plugin for Homebridge",
-  "author": "Vladimir Sobolev",
-  "homepage": "https://twitter.com/350d",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/350d/homebridge-http-garage-doors.git"
-  },
-  "bugs": {
-    "url": "https://github.com/350d/homebridge-http-garage-doors/issues",
-    "email": "v.sobolev@gmail.com"
-  },
-  "keywords": [
-    "homebridge-plugin",
-    "homebridge",
-    "garage",
-    "garagedoor",
-    "home"
-  ],
-  "engines": {
-    "node": ">=14",
-    "homebridge": ">=0.3.0"
-  },
-  "dependencies": {
-    "request": "^2.88.2"
-  },
-  "devDependencies": {
-    "semistandard": "^8.0.0"
-  },
-  "scripts": {
-    "debug": "DEBUG=* homebridge --debug --plugin-path .",
-    "test": "./node_modules/.bin/semistandard",
-    "preversion": "npm test",
-    "postversion": "git push && git push --tags"
-  }
+	"name": "homebridge-http-garage-doors",
+	"version": "0.2.0",
+	"description": "Garage Door plugin for Homebridge",
+	"author": "Vladimir Sobolev",
+	"homepage": "https://twitter.com/350d",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/350d/homebridge-http-garage-doors.git"
+	},
+	"bugs": {
+		"url": "https://github.com/350d/homebridge-http-garage-doors/issues",
+		"email": "v.sobolev@gmail.com"
+	},
+	"keywords": [
+		"homebridge-plugin",
+		"homebridge",
+		"garage",
+		"garagedoor",
+		"home"
+	],
+	"main": "platform.js",
+	"engines": {
+		"node": ">=14",
+		"homebridge": ">=2.0.0"
+	},
+	"homebridge": {
+		"platforms": [
+			{
+				"platform": "HttpGarageDoors",
+				"name": "Garage Door"
+			}
+		]
+	},
+	"dependencies": {
+		"request": "^2.88.2",
+		"uuid": "^9.0.0"
+	},
+	"devDependencies": {
+		"semistandard": "^8.0.0"
+	},
+	"scripts": {
+		"debug": "DEBUG=* homebridge --debug --plugin-path .",
+		"test": "./node_modules/.bin/semistandard",
+		"preversion": "npm test",
+		"postversion": "git push && git push --tags"
+	}
 }
+
+

@@ -1,124 +1,99 @@
 {
-  "pluginAlias": "HttpGarageDoors",
-  "pluginType": "accessory",
-  "singular": true,
-  "headerDisplay": "The HTTP Garage Doors plugin enables you to send HTTP requests to any API, facilitating the automation of devices such as garage doors. For instance, if your parking entrance is activated via a phone call, you can configure the Telnyx API to dial a specific number with just a single API request. Additionally, you can set custom timings for your gates to receive accurate status updates, such as OPENING, OPEN, CLOSING, and CLOSED.",
-  "footerDisplay": "Enhance your driving experience by using this plugin to add a garage door control button directly to your CarPlay screen.",
-    "schema": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "title": "Name",
-            "type": "string",
-            "default": "Garage Door",
-            "required": true
-          },
-          "simulateTimeOpening": {
-            "title": "Door opening time",
-            "type": "number",
-            "default": 13,
-            "required": true
-          },
-          "simulateTimeOpen": {
-            "title": "Door open time",
-            "type": "number",
-            "default": 15,
-            "required": true
-          },
-          "simulateTimeClosing": {
-            "title": "Door closing time",
-            "type": "number",
-            "default": 12,
-            "required": true
-          },
-          "closeAfter": {
-            "title": "Close gates after",
-            "type": "number",
-            "default": 28,
-            "required": true
-          },
-          "request": {
-            "type": "object",
-            "properties": {
-              "url": {
-                "title": "URL",
-                "type": "string"
-              },
-              "method": {
-                "title": "Method",
-                "type": "string",
-                "default": "GET",
-                "enum": ["GET", "POST"]
-              },
-              "type": {
-                "title": "Type",
-                "type": "string",
-                "default": "JSON",
-                "oneOf": [
-                  {"title":"JSON", "enum": ["JSON"]},
-                  {"title":"FORM", "enum": ["FORM"]}
-                ]
-              },
-              "headers": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "name": { "type": "string", "placeholder": "Authorization"},
-                    "value": { "type": "string", "placeholder": "Bearer ABCDEF1234567890" }
-                  }
-                }
-              },
-              "params": {
-                "type": "array",
-                "title": "Parameters",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "name": { "type": "string", "placeholder": "foo"},
-                    "value": { "type": "string", "placeholder": "bar" }
-                  }
-                }
-              }
-            }
-          },
-          "debug": {
-            "title": "Debug log",
-            "type": "boolean"
-          }
-        }
-  },
-  "layout": [
-      { "key": "name"},
-      { "type": "flex", "flex-flow": "row wrap", "items": [ "simulateTimeOpening", "simulateTimeOpen", "simulateTimeClosing", "closeAfter" ] },
-      { "key": "request.url"},
-      { "type": "flex", "flex-flow": "row wrap", "items": ["request.method", "request.type"]},
-      { "key": "request.headers", "placeholder": "Headers", "type": "array", "items": [ {
-        "type": "div",
-        "displayFlex": true,
-        "flex-direction": "row",
-        "items": [
-          { "key": "request.headers[].name", "flex": "1 1 50px",
-            "notitle": true, "placeholder": "Name"
-          },
-          { "key": "request.headers[].value", "flex": "4 4 200px",
-            "notitle": true, "placeholder": "Value"
-          }
-        ]
-      } ]},
-      { "key": "request.params", "placeholder": "Parameters", "type": "array", "items": [ {
-        "type": "div",
-        "displayFlex": true,
-        "flex-direction": "row",
-        "items": [
-          { "key": "request.params[].name", "flex": "1 1 50px",
-            "notitle": true, "placeholder": "Name"
-          },
-          { "key": "request.params[].value", "flex": "4 4 200px",
-            "notitle": true, "placeholder": "Value"
-          }
-        ]
-      } ]},
-      { "key": "debug"}
-    ]
+	"pluginAlias": "HttpGarageDoors",
+	"pluginType": "platform",
+	"singular": true,
+	"headerDisplay": "The HTTP Garage Doors plugin enables you to send HTTP requests to any API, facilitating the automation of devices such as garage doors. For instance, if your parking entrance is activated via a phone call, you can configure the Telnyx API to dial a specific number with just a single API request. Additionally, you can set custom timings for your gates to receive accurate status updates, such as OPENING, OPEN, CLOSING, and CLOSED.",
+	"footerDisplay": "Enhance your driving experience by using this plugin to add a garage door control button directly to your CarPlay screen.",
+	"schema": {
+		"type": "object",
+		"required": ["name", "simulateTimeOpening", "simulateTimeOpen", "simulateTimeClosing", "closeAfter"],
+		"properties": {
+			"name": {
+				"title": "Name",
+				"type": "string",
+				"default": "Garage Door"
+			},
+			"simulateTimeOpening": {
+				"title": "Door opening time",
+				"type": "number",
+				"default": 13
+			},
+			"simulateTimeOpen": {
+				"title": "Door open time",
+				"type": "number",
+				"default": 15
+			},
+			"simulateTimeClosing": {
+				"title": "Door closing time",
+				"type": "number",
+				"default": 12
+			},
+			"closeAfter": {
+				"title": "Close gates after",
+				"type": "number",
+				"default": 28
+			},
+			"request": {
+				"type": "object",
+				"properties": {
+					"url": {
+						"title": "Open URL",
+						"type": "string"
+					},
+					"method": {
+						"title": "Method",
+						"type": "string",
+						"default": "POST",
+						"enum": ["GET", "POST"]
+					},
+					"type": {
+						"title": "Type",
+						"type": "string",
+						"default": "JSON",
+						"enum": ["JSON", "FORM"]
+					},
+					"headers": {
+						"type": "object",
+						"title": "Headers",
+						"additionalProperties": {
+							"type": "string"
+						}
+					},
+					"params": {
+						"type": "object",
+						"title": "Parameters",
+						"additionalProperties": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"debug": {
+				"title": "Debug log",
+				"type": "boolean"
+			}
+		}
+	},
+	"layout": [
+		{ "key": "name" },
+		{
+			"type": "flex",
+			"flex-flow": "row wrap",
+			"items": [
+				"simulateTimeOpening",
+				"simulateTimeOpen",
+				"simulateTimeClosing",
+				"closeAfter"
+			]
+		},
+		{ "key": "request.url", "placeholder": "Request" },
+		{
+			"type": "flex",
+			"flex-flow": "row wrap",
+			"items": ["request.method", "request.type"]
+		},
+		{ "key": "request.headers" },
+		{ "key": "request.params" },
+		{ "key": "debug" }
+	]
 }

@@ -1,30 +1,31 @@
 {
-    "bridge": {},
-    "description": "This is an example configuration file. You can use this as a template for creating your own configuration file.",
-    "platforms": [],
+	"bridge": {},
+	"description": "This is an example configuration file. You can use this as a template for creating your own configuration file.",
+	"accessories": [],
+	"platforms": [
+		{
+			"platform": "HttpGarageDoors",
+			"name": "Parking",
 
-    "accessories": [{
-        "accessory": "HttpGarageDoors",
-        "name": "Parking",
-        
-        "closeAfter": 28,
-        "simulateTimeOpening": 13,
-        "simulateTimeOpen": 15,
-        "simulateTimeClosing": 12,
-        
-        "request": {
-            "headers": {
-                "Authorization": "Bearer KEY0123456789ABCDEF",
-            },
-            "url": "https://api.telnyx.com/v2/calls",
-            "method": "post",
-            "type": "json",
-            "params": {
-                "foo": "bar",
-                "bar": "foo",
-            },
-        },
+			"closeAfter": 28,
+			"simulateTimeOpening": 13,
+			"simulateTimeOpen": 15,
+			"simulateTimeClosing": 12,
 
-        "debug": false
-    }]
+			"request": {
+				"headers": {
+					"Authorization": "Bearer KEY0123456789ABCDEF"
+				},
+				"url": "https://api.telnyx.com/v2/calls",
+				"method": "post",
+				"type": "json",
+				"params": {
+					"foo": "bar",
+					"bar": "foo"
+				}
+			},
+
+			"debug": false
+		}
+	]
 }

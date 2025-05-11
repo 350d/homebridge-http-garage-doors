@@ -123,7 +123,7 @@ class HttpGarageDoorsAccessory {
 
     if (request.params) {
       for (const key in request.params) {
-        params_object[key] = request.params[key];
+        params_object[request.params[key].name] = request.params[key].value;
         query_params.push(encodeURIComponent(param.name) + "=" + encodeURIComponent(param.value));
       };
     }
@@ -134,7 +134,7 @@ class HttpGarageDoorsAccessory {
 
     if (request.headers) {
       for (const key in request.headers) {
-        headers_object[key] = request.headers[key];
+        headers_object[request.headers[key].name] = request.headers[key].value;
       };
     }
 

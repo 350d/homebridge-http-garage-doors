@@ -1,6 +1,6 @@
 {
 	"name": "homebridge-http-garage-doors",
-	"version": "0.2.7",
+	"version": "0.2.8",
 	"description": "Garage Door plugin for Homebridge",
 	"author": "Vladimir Sobolev",
 	"homepage": "https://twitter.com/350d",
@@ -29,12 +29,6 @@
 		"accessories": [
 			{
 				"accessory": "HttpGarageDoors",
-				"name": "Garage Door"
-			}
-		],
-		"platforms": [
-			{
-				"platform": "HttpGarageDoors",
 				"name": "Garage Door"
 			}
 		]
